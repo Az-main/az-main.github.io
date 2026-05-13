@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Azmain Islam | Portfolio</title>
   <meta name="description" content="Azmain Islam portfolio website" />
+
   <style>
     :root {
       --bg: #000000;
@@ -125,7 +127,8 @@
     .hero-right,
     .panel,
     .project-card,
-    .contact-card {
+    .contact-card,
+    .journey-card {
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       border: 1px solid var(--border);
       border-radius: 22px;
@@ -189,6 +192,7 @@
       transition: 0.25s ease;
       font-weight: 600;
       display: inline-block;
+      cursor: pointer;
     }
 
     .btn.primary {
@@ -313,7 +317,8 @@
 
     .skills-grid,
     .projects-grid,
-    .contact-grid {
+    .contact-grid,
+    .journey-grid {
       display: grid;
       gap: 20px;
     }
@@ -327,6 +332,10 @@
     }
 
     .contact-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .journey-grid {
       grid-template-columns: repeat(3, 1fr);
     }
 
@@ -335,6 +344,16 @@
       border: 1px solid var(--border);
       border-radius: 20px;
       background: var(--panel);
+      transition: 0.25s ease;
+    }
+
+    .skill-card:hover,
+    .project-card:hover,
+    .contact-card:hover,
+    .journey-card:hover {
+      transform: translateY(-4px);
+      border-color: #333;
+      background: rgba(255,255,255,0.025);
     }
 
     .skill-card h3 {
@@ -354,8 +373,38 @@
       color: var(--accent-soft);
     }
 
+    .project-filters {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .filter-btn {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      color: var(--muted);
+      cursor: pointer;
+      transition: 0.25s ease;
+      font-weight: 600;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
     .project-card {
       padding: 24px;
+      transition: 0.25s ease;
+    }
+
+    .project-card.hide {
+      display: none;
     }
 
     .project-card h3 {
@@ -396,8 +445,22 @@
       padding-bottom: 2px;
     }
 
+    .journey-card {
+      padding: 24px;
+    }
+
+    .journey-card h3 {
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    .journey-card p {
+      color: var(--muted);
+    }
+
     .contact-card {
       padding: 24px;
+      transition: 0.25s ease;
     }
 
     .contact-card h3 {
@@ -411,6 +474,13 @@
       word-break: break-word;
     }
 
+    .copy-message {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+      display: none;
+    }
+
     footer {
       padding: 36px 0 60px;
       color: #7d7d7d;
@@ -419,11 +489,36 @@
       margin-top: 20px;
     }
 
+    .back-to-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: #0a0a0a;
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     @media (max-width: 960px) {
       .hero-grid,
       .skills-grid,
       .projects-grid,
-      .contact-grid {
+      .contact-grid,
+      .journey-grid {
         grid-template-columns: 1fr;
       }
 
@@ -449,6 +544,10 @@
         gap: 12px;
       }
 
+      .nav-links {
+        gap: 14px;
+      }
+
       .hero h1 {
         font-size: 2.4rem;
       }
@@ -460,93 +559,111 @@
     }
   </style>
 </head>
+
 <body>
   <nav class="nav">
     <div class="container nav-inner">
       <div class="logo">Azmain Islam</div>
+
       <div class="nav-links">
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
+        <a href="#journey">Journey</a>
         <a href="#contact">Contact</a>
       </div>
     </div>
   </nav>
 
   <header class="hero">
-  <div class="container hero-grid">
-    <div class="hero-left">
-      <div class="tag">Data Science Student / AI & ML Learner</div>
-      <h1>Azmain Islam</h1>
-      <p>
-        I am a BSc in Data Science student at United International University,
-        currently building my skills in Python, Machine Learning, Data Analytics,
-        Artificial Intelligence, and System Design. I am also doing an internship
-        as a Prompt Engineer at Power in AI, where I am learning how AI systems are
-        designed, tested, and improved for real-world use.
-      </p>
+    <div class="container hero-grid">
+      <div class="hero-left">
+        <div class="tag">Data Science Student / AI & ML Learner</div>
 
-      <div class="hero-buttons">
-        <a href="#projects" class="btn primary">View Projects</a>
-        <a href="https://www.linkedin.com/in/azmain-islam-aa3387278/" target="_blank" class="btn secondary">LinkedIn</a>
-        <a href="#contact" class="btn secondary">Contact Me</a>
-      </div>
+        <h1>Azmain Islam</h1>
 
-      <div class="hero-meta">
-        <span>Based in Bangladesh</span>
-        <span>•</span>
-        <span>BSc in Data Science, UIU</span>
-        <span>•</span>
-        <span>Prompt Engineer Intern</span>
-      </div>
-    </div>
+        <p>
+          I am a BSc in Data Science student at United International University,
+          currently building my skills in Python, Machine Learning, Data Analytics,
+          Artificial Intelligence, and System Design. I am also doing an internship
+          as a Prompt Engineer at Power in AI, where I am learning how AI systems are
+          designed, tested, and improved for real-world use.
+        </p>
 
-    <div class="hero-right">
-      <div class="terminal">
-        <div class="terminal-top">
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
+        <div class="hero-buttons">
+          <a href="#projects" class="btn primary">View Projects</a>
+          <a href="https://github.com/Az-main" target="_blank" class="btn secondary">GitHub</a>
+          <a href="https://www.linkedin.com/in/azmain-islam-aa3387278/" target="_blank" class="btn secondary">LinkedIn</a>
+          <a href="#contact" class="btn secondary">Contact Me</a>
         </div>
-        <div class="terminal-body">
-          <div><span class="muted">$</span> whoami</div>
-          <div>Azmain Islam</div>
-          <div><span class="muted">$</span> education</div>
-          <div>BSc in Data Science, UIU</div>
-          <div><span class="muted">$</span> role</div>
-          <div>Prompt Engineer Intern at Power in AI</div>
-          <div><span class="muted">$</span> focus</div>
-          <div>Python, ML, Data Analytics, AI, System Design</div>
-          <div><span class="muted">$</span> status</div>
-          <div>Learning, building, and improving...</div>
+
+        <div class="hero-meta">
+          <span>Based in Bangladesh</span>
+          <span>•</span>
+          <span>BSc in Data Science, UIU</span>
+          <span>•</span>
+          <span>Prompt Engineer Intern</span>
         </div>
       </div>
 
-      <div class="stat-box">
-        <h3>Current Focus</h3>
-        <p>AI & ML</p>
-      </div>
+      <div class="hero-right">
+        <div class="terminal">
+          <div class="terminal-top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
 
-      <div class="stat-box">
-        <h3>Academic Track</h3>
-        <p>Data Science</p>
+          <div class="terminal-body">
+            <div><span class="muted">$</span> whoami</div>
+            <div>Azmain Islam</div>
+
+            <div><span class="muted">$</span> education</div>
+            <div>BSc in Data Science, UIU</div>
+
+            <div><span class="muted">$</span> role</div>
+            <div>Prompt Engineer Intern at Power in AI</div>
+
+            <div><span class="muted">$</span> focus</div>
+            <div>Python, ML, Data Analytics, AI, System Design</div>
+
+            <div><span class="muted">$</span> github</div>
+            <div>github.com/Az-main</div>
+
+            <div><span class="muted">$</span> status</div>
+            <div>Learning, building, and improving...</div>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <h3>Public GitHub Repositories</h3>
+          <p>6</p>
+        </div>
+
+        <div class="stat-box">
+          <h3>Academic Track</h3>
+          <p>Data Science</p>
+        </div>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
   <section id="about">
     <div class="container">
       <div class="section-head">
         <h2>About</h2>
-        <p>A simple introduction section you can edit anytime.</p>
+        <p>A short introduction to who I am, what I am learning, and what I am building.</p>
       </div>
 
       <div class="panel">
         <p class="about-text">
-          Hello, I am Azmain Islam. I am building my portfolio step by step.
-          This website is designed with a clean black technical style and will grow over time
-          as I add more projects, skills, achievements, and experience.
+          Hello, I am Azmain Islam. I am currently studying BSc in Data Science at
+          United International University. My main interests are Python, Machine Learning,
+          Data Analytics, Artificial Intelligence, and System Design. Alongside my academic
+          journey, I am doing an internship as a Prompt Engineer at Power in AI, where I am
+          gaining practical experience with AI systems, prompt design, testing, and real-world
+          AI workflow improvement. This portfolio is my personal space to document my learning,
+          showcase my projects, and present my technical growth.
         </p>
       </div>
     </div>
@@ -556,34 +673,37 @@
     <div class="container">
       <div class="section-head">
         <h2>Skills</h2>
-        <p>Replace these with your real skills whenever you want.</p>
+        <p>The tools and technical areas I am currently learning, practicing, and applying.</p>
       </div>
 
       <div class="skills-grid">
         <div class="skill-card">
-          <h3>Frontend</h3>
+          <h3>Data & AI</h3>
+          <ul>
+            <li>Python</li>
+            <li>Machine Learning</li>
+            <li>Data Analytics</li>
+            <li>Artificial Intelligence</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <h3>Technical Thinking</h3>
+          <ul>
+            <li>System Design Basics</li>
+            <li>Problem Solving</li>
+            <li>Logical Thinking</li>
+            <li>Model Evaluation</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <h3>Web & Tools</h3>
           <ul>
             <li>HTML</li>
             <li>CSS</li>
-            <li>JavaScript</li>
-          </ul>
-        </div>
-
-        <div class="skill-card">
-          <h3>Programming</h3>
-          <ul>
-            <li>Python</li>
-            <li>Problem Solving</li>
-            <li>Logical Thinking</li>
-          </ul>
-        </div>
-
-        <div class="skill-card">
-          <h3>Tools</h3>
-          <ul>
             <li>GitHub</li>
             <li>VS Code</li>
-            <li>GitHub Pages</li>
           </ul>
         </div>
       </div>
@@ -594,41 +714,187 @@
     <div class="container">
       <div class="section-head">
         <h2>Projects</h2>
-        <p>Keep placeholders now, then replace them gradually later.</p>
+        <p>A collection of my academic, technical, data science, machine learning, and web development projects.</p>
+      </div>
+
+      <div class="project-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="data">Data Science</button>
+        <button class="filter-btn" data-filter="ml">Machine Learning</button>
+        <button class="filter-btn" data-filter="dbms">DBMS</button>
+        <button class="filter-btn" data-filter="web">Web</button>
+        <button class="filter-btn" data-filter="practice">Practice</button>
       </div>
 
       <div class="projects-grid">
-        <div class="project-card">
-          <h3>Portfolio Website</h3>
+        <div class="project-card" data-category="dbms web">
+          <h3>Alumni Sync — DBMS Project</h3>
+
           <p>
-            My personal portfolio website hosted with GitHub Pages.
-            Built with a strong black technical design.
+            A full-stack alumni management system built with Flask and MySQL.
+            The project includes role-based access, alumni and student profiles,
+            job board, event management, private messaging, searchable directories,
+            and normalized database design.
           </p>
+
           <div class="project-tags">
+            <span>Flask</span>
+            <span>MySQL</span>
+            <span>DBMS</span>
             <span>HTML</span>
             <span>CSS</span>
-            <span>Responsive</span>
           </div>
+
           <div class="project-links">
-            <a href="#">Live Demo</a>
-            <a href="#">Source Code</a>
+            <a href="https://github.com/Az-main/Alymni-Sync--DBMS-Project-" target="_blank">Source Code</a>
           </div>
         </div>
 
-        <div class="project-card">
-          <h3>Future Project</h3>
+        <div class="project-card" data-category="data ml">
+          <h3>Data Wrangling Project</h3>
+
           <p>
-            This section is reserved for a project I will add later.
-            You can rename and update this card anytime.
+            An e-commerce data collection and sentiment analysis project.
+            It scrapes product data and customer reviews from Bangladeshi
+            e-commerce platforms and performs multilingual sentiment analysis
+            on Bangla, Banglish, and English reviews.
           </p>
+
           <div class="project-tags">
-            <span>Coming Soon</span>
-            <span>Technical</span>
+            <span>Python</span>
+            <span>Selenium</span>
+            <span>Pandas</span>
+            <span>BERT</span>
+            <span>Sentiment Analysis</span>
           </div>
+
           <div class="project-links">
-            <a href="#">Preview</a>
-            <a href="#">Details</a>
+            <a href="https://github.com/Az-main/Data-Wrangling-Project" target="_blank">Source Code</a>
           </div>
+        </div>
+
+        <div class="project-card" data-category="ml data">
+          <h3>SMINT — Stock Prediction</h3>
+
+          <p>
+            A stock price prediction and portfolio management application.
+            It includes machine learning prediction, interactive visualization,
+            user authentication, and a virtual trading simulator built with Streamlit.
+          </p>
+
+          <div class="project-tags">
+            <span>Python</span>
+            <span>Machine Learning</span>
+            <span>Streamlit</span>
+            <span>Jupyter Notebook</span>
+            <span>OOP</span>
+          </div>
+
+          <div class="project-links">
+            <a href="https://github.com/Az-main/SMINT-Stock-Prediction" target="_blank">Source Code</a>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="dbms data">
+          <h3>Product Inventory System</h3>
+
+          <p>
+            A product inventory management application built with Python,
+            Streamlit, and MySQL. It supports adding, viewing, updating,
+            and deleting product records through a simple interface.
+          </p>
+
+          <div class="project-tags">
+            <span>Python</span>
+            <span>Streamlit</span>
+            <span>MySQL</span>
+            <span>CRUD</span>
+            <span>DBMS</span>
+          </div>
+
+          <div class="project-links">
+            <a href="https://github.com/Az-main/Product-inventory-system---DBMS" target="_blank">Source Code</a>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="practice ml">
+          <h3>TensorTonic Solutions</h3>
+
+          <p>
+            A repository containing my solutions to TensorTonic machine learning
+            and deep learning problems. This project shows my practice with core
+            ML concepts, algorithms, and problem-solving.
+          </p>
+
+          <div class="project-tags">
+            <span>Python</span>
+            <span>Machine Learning</span>
+            <span>Deep Learning</span>
+            <span>Algorithms</span>
+            <span>Practice</span>
+          </div>
+
+          <div class="project-links">
+            <a href="https://github.com/Az-main/TensorTonic-Solutions" target="_blank">Source Code</a>
+          </div>
+        </div>
+
+        <div class="project-card" data-category="web">
+          <h3>Portfolio Website</h3>
+
+          <p>
+            My personal portfolio website hosted with GitHub Pages.
+            It presents my profile, academic background, technical skills,
+            projects, and contact information in a clean technical layout.
+          </p>
+
+          <div class="project-tags">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>GitHub Pages</span>
+            <span>Responsive</span>
+            <span>Portfolio</span>
+          </div>
+
+          <div class="project-links">
+            <a href="https://az-main.github.io/" target="_blank">Live Demo</a>
+            <a href="https://github.com/Az-main/az-main.github.io" target="_blank">Source Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="journey">
+    <div class="container">
+      <div class="section-head">
+        <h2>Learning Journey</h2>
+        <p>A simple timeline showing how I am growing as a Data Science and AI learner.</p>
+      </div>
+
+      <div class="journey-grid">
+        <div class="journey-card">
+          <h3>Academic Foundation</h3>
+          <p>
+            Studying BSc in Data Science at United International University and building
+            my foundation in programming, data, statistics, and technical problem solving.
+          </p>
+        </div>
+
+        <div class="journey-card">
+          <h3>Project-Based Learning</h3>
+          <p>
+            Practicing through GitHub projects related to DBMS, data wrangling,
+            machine learning, stock prediction, and web portfolio development.
+          </p>
+        </div>
+
+        <div class="journey-card">
+          <h3>Real-World AI Exposure</h3>
+          <p>
+            Working as a Prompt Engineer Intern at Power in AI and learning how AI systems
+            are designed, tested, improved, and applied in real business workflows.
+          </p>
         </div>
       </div>
     </div>
@@ -638,24 +904,34 @@
     <div class="container">
       <div class="section-head">
         <h2>Contact</h2>
-        <p>Update these with your real contact details.</p>
+        <p>Feel free to connect with me for learning, collaboration, internship, or project discussions.</p>
       </div>
 
       <div class="contact-grid">
         <div class="contact-card">
           <h3>Email</h3>
-          <p>your-email@example.com</p>
+          <a href="mailto:azmainislam9@gmail.com">azmainislam9@gmail.com</a>
+          <p class="copy-message" id="copyMessage">Email copied.</p>
+        </div>
+
+        <div class="contact-card">
+          <h3>LinkedIn</h3>
+          <a href="https://www.linkedin.com/in/azmain-islam-aa3387278/" target="_blank">linkedin.com/in/azmain-islam</a>
         </div>
 
         <div class="contact-card">
           <h3>GitHub</h3>
-          <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a>
+          <a href="https://github.com/Az-main" target="_blank">github.com/Az-main</a>
         </div>
 
         <div class="contact-card">
           <h3>Location</h3>
           <p>Bangladesh</p>
         </div>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <button class="btn secondary" onclick="copyEmail()">Copy Email</button>
       </div>
     </div>
   </section>
@@ -665,5 +941,61 @@
       © 2026 Azmain Islam — Portfolio
     </div>
   </footer>
+
+  <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+  <script>
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const projectCards = document.querySelectorAll(".project-card");
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        filterButtons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        const selectedFilter = button.getAttribute("data-filter");
+
+        projectCards.forEach((card) => {
+          const categories = card.getAttribute("data-category");
+
+          if (selectedFilter === "all" || categories.includes(selectedFilter)) {
+            card.classList.remove("hide");
+          } else {
+            card.classList.add("hide");
+          }
+        });
+      });
+    });
+
+    function copyEmail() {
+      const email = "azmainislam9@gmail.com";
+      const message = document.getElementById("copyMessage");
+
+      navigator.clipboard.writeText(email).then(() => {
+        message.style.display = "block";
+
+        setTimeout(() => {
+          message.style.display = "none";
+        }, 1800);
+      });
+    }
+
+    const backToTopButton = document.getElementById("backToTop");
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 500) {
+        backToTopButton.classList.add("show");
+      } else {
+        backToTopButton.classList.remove("show");
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+  </script>
 </body>
 </html>
