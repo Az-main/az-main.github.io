@@ -34,6 +34,7 @@
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
+      position: relative;
     }
 
     body::before {
@@ -41,11 +42,11 @@
       position: fixed;
       inset: 0;
       background:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 28px 28px;
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 32px 32px;
       pointer-events: none;
-      z-index: -2;
+      z-index: 0;
     }
 
     body::after {
@@ -53,11 +54,172 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 10%, rgba(255,255,255,0.06), transparent 30%),
-        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.04), transparent 25%),
-        radial-gradient(circle at 50% 80%, rgba(255,255,255,0.03), transparent 30%);
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,0.08), transparent 28%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05), transparent 24%),
+        radial-gradient(circle at 50% 85%, rgba(255,255,255,0.04), transparent 30%);
       pointer-events: none;
-      z-index: -1;
+      z-index: 0;
+    }
+
+    .optimizer-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.28;
+      overflow: hidden;
+    }
+
+    .optimizer-bg svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .curve {
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-dasharray: 900;
+      stroke-dashoffset: 900;
+      animation: drawCurve 5s ease-in-out forwards, curveFloat 7s ease-in-out infinite;
+    }
+
+    .curve.adam {
+      stroke: rgba(255, 255, 255, 0.88);
+      animation-delay: 0.2s;
+    }
+
+    .curve.rmsprop {
+      stroke: rgba(180, 180, 180, 0.58);
+      animation-delay: 0.6s;
+    }
+
+    .curve.sgd {
+      stroke: rgba(120, 120, 120, 0.48);
+      animation-delay: 1s;
+    }
+
+    .graph-line {
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-dasharray: 4 8;
+    }
+
+    .graph-label {
+      fill: rgba(255, 255, 255, 0.32);
+      font-size: 14px;
+      font-family: Consolas, monospace;
+    }
+
+    @keyframes drawCurve {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes curveFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .floating-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .float-item {
+      position: absolute;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.035);
+      color: rgba(255, 255, 255, 0.48);
+      font-size: 0.85rem;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.035);
+      animation: floatMove 14s ease-in-out infinite;
+    }
+
+    .float-item:nth-child(1) {
+      top: 16%;
+      left: 6%;
+      animation-delay: 0s;
+    }
+
+    .float-item:nth-child(2) {
+      top: 28%;
+      right: 8%;
+      animation-delay: 1.5s;
+    }
+
+    .float-item:nth-child(3) {
+      top: 58%;
+      left: 4%;
+      animation-delay: 3s;
+    }
+
+    .float-item:nth-child(4) {
+      top: 72%;
+      right: 10%;
+      animation-delay: 4.5s;
+    }
+
+    .float-item:nth-child(5) {
+      top: 42%;
+      left: 45%;
+      animation-delay: 2s;
+    }
+
+    .float-item:nth-child(6) {
+      top: 84%;
+      left: 32%;
+      animation-delay: 5s;
+    }
+
+    .float-item:nth-child(7) {
+      top: 10%;
+      right: 34%;
+      animation-delay: 6s;
+    }
+
+    .float-item:nth-child(8) {
+      top: 66%;
+      right: 38%;
+      animation-delay: 7s;
+    }
+
+    @keyframes floatMove {
+      0% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.35;
+      }
+
+      50% {
+        transform: translateY(-28px) translateX(18px) rotate(2deg);
+        opacity: 0.75;
+      }
+
+      100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.35;
+      }
+    }
+
+    nav,
+    header,
+    section,
+    footer,
+    .back-to-top {
+      position: relative;
+      z-index: 2;
     }
 
     a {
@@ -129,10 +291,11 @@
     .project-card,
     .contact-card,
     .journey-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(12,12,12,0.94), rgba(5,5,5,0.9));
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 22px;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.02), 0 20px 50px rgba(0,0,0,0.45);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.02), 0 20px 50px rgba(0,0,0,0.55);
+      backdrop-filter: blur(14px);
     }
 
     .hero-left {
@@ -161,7 +324,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-bottom: 18px;
-      background: rgba(255,255,255,0.02);
+      background: rgba(255,255,255,0.04);
     }
 
     .hero h1 {
@@ -206,12 +369,13 @@
     }
 
     .btn.secondary {
-      background: transparent;
+      background: rgba(255,255,255,0.02);
       color: var(--text);
     }
 
     .btn.secondary:hover {
-      background: rgba(255,255,255,0.04);
+      background: rgba(255,255,255,0.07);
+      transform: translateY(-2px);
     }
 
     .hero-meta {
@@ -266,8 +430,8 @@
     .stat-box {
       padding: 20px;
       border-radius: 18px;
-      border: 1px solid var(--border);
-      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.025);
     }
 
     .stat-box h3 {
@@ -341,9 +505,9 @@
 
     .skill-card {
       padding: 24px;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,0.09);
       border-radius: 20px;
-      background: var(--panel);
+      background: rgba(5,5,5,0.75);
       transition: 0.25s ease;
     }
 
@@ -352,8 +516,8 @@
     .contact-card:hover,
     .journey-card:hover {
       transform: translateY(-4px);
-      border-color: #333;
-      background: rgba(255,255,255,0.025);
+      border-color: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.035);
     }
 
     .skill-card h3 {
@@ -430,7 +594,7 @@
       border: 1px solid #2a2a2a;
       color: #cfcfcf;
       font-size: 0.82rem;
-      background: rgba(255,255,255,0.02);
+      background: rgba(255,255,255,0.03);
     }
 
     .project-links {
@@ -506,6 +670,7 @@
       opacity: 0;
       pointer-events: none;
       transition: 0.25s ease;
+      z-index: 10;
     }
 
     .back-to-top.show {
@@ -556,11 +721,55 @@
         flex-direction: column;
         align-items: start;
       }
+
+      .float-item:nth-child(5),
+      .float-item:nth-child(6),
+      .float-item:nth-child(7),
+      .float-item:nth-child(8) {
+        display: none;
+      }
+
+      .optimizer-bg {
+        opacity: 0.18;
+      }
     }
   </style>
 </head>
 
 <body>
+  <div class="optimizer-bg">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
+      <line class="graph-line" x1="120" y1="180" x2="1080" y2="180" />
+      <line class="graph-line" x1="120" y1="330" x2="1080" y2="330" />
+      <line class="graph-line" x1="120" y1="480" x2="1080" y2="480" />
+      <line class="graph-line" x1="120" y1="630" x2="1080" y2="630" />
+
+      <line class="graph-line" x1="250" y1="110" x2="250" y2="700" />
+      <line class="graph-line" x1="500" y1="110" x2="500" y2="700" />
+      <line class="graph-line" x1="750" y1="110" x2="750" y2="700" />
+      <line class="graph-line" x1="1000" y1="110" x2="1000" y2="700" />
+
+      <path class="curve sgd" d="M120 130 C170 220, 220 310, 300 365 C420 455, 520 470, 650 505 C790 545, 920 555, 1080 585" />
+      <path class="curve rmsprop" d="M120 120 C170 250, 260 350, 360 420 C500 510, 680 520, 850 555 C960 575, 1020 590, 1080 610" />
+      <path class="curve adam" d="M120 120 C160 280, 240 395, 360 485 C500 580, 710 610, 870 635 C960 650, 1030 662, 1080 670" />
+
+      <text class="graph-label" x="120" y="95">training cost</text>
+      <text class="graph-label" x="880" y="725">iterations</text>
+      <text class="graph-label" x="910" y="125">Adam / ML convergence</text>
+    </svg>
+  </div>
+
+  <div class="floating-bg">
+    <div class="float-item">Python</div>
+    <div class="float-item">Machine Learning</div>
+    <div class="float-item">Data Analytics</div>
+    <div class="float-item">AI</div>
+    <div class="float-item">System Design</div>
+    <div class="float-item">Prompt Engineering</div>
+    <div class="float-item">DBMS</div>
+    <div class="float-item">GitHub</div>
+  </div>
+
   <nav class="nav">
     <div class="container nav-inner">
       <div class="logo">Azmain Islam</div>
