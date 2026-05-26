@@ -278,9 +278,20 @@
       width: 100%;
     }
 
-    /* High-end Vercel/GitHub styled cards */
-    .hero-left,
-    .hero-right,
+    /* Transparent containers for Hero columns to reveal background */
+    .hero-left {
+      padding: 20px 0;
+      position: relative;
+    }
+
+    .hero-right {
+      padding: 0;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+    }
+
+    /* High-end Vercel/GitHub styled cards for panels, projects, and contact info */
     .panel,
     .project-card,
     .contact-card,
@@ -296,8 +307,6 @@
     }
 
     /* Elegant gradient borders on hover */
-    .hero-left::before,
-    .hero-right::before,
     .panel::before,
     .project-card::before,
     .contact-card::before,
@@ -321,21 +330,6 @@
     .journey-card:hover::before,
     .skill-card:hover::before {
       background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
-    }
-
-    .hero-left {
-      padding: 48px;
-      overflow: hidden;
-    }
-
-    .hero-left::after {
-      content: "";
-      position: absolute;
-      inset: auto -80px -80px auto;
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.06), transparent 70%);
     }
 
     .tag {
@@ -421,19 +415,13 @@
       font-size: 0.88rem;
     }
 
-    .hero-right {
-      padding: 24px;
-      display: grid;
-      gap: 16px;
-      align-content: start;
-    }
-
     /* Live Interactive Terminal */
     .terminal {
       background: #030305;
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 16px;
       overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
     }
 
     .terminal-top {
@@ -487,7 +475,8 @@
       padding: 20px;
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(255, 255, 255, 0.01);
+      background: linear-gradient(180deg, rgba(12, 12, 16, 0.85), rgba(6, 6, 8, 0.95));
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
     }
 
     .stat-box h3 {
@@ -765,7 +754,7 @@
 
       .hero-left,
       .hero-right {
-        padding: 32px;
+        padding: 20px 0;
       }
 
       .section-head {
